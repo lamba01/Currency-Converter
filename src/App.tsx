@@ -17,6 +17,7 @@ const CurrencyConverter: React.FC = () => {
     // Fetch currency list from an API (for example, Open Exchange Rates)
     axios.get('https://open.er-api.com/v6/latest')
       .then(response => {
+        console.log(response.data.rates)
         const currencyList: Currency[] = Object.keys(response.data.rates).map((code: string) => ({
           code,
           rate: response.data.rates[code],
