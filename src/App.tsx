@@ -47,7 +47,7 @@ const CurrencyConverter: React.FC = () => {
     <div>
       <div className="converter">
       <h1>Currency Converter</h1>
-      <p>Check live rates, set rates alert, receive notifications and more</p>
+      <p className='description'>Check live rates, set rates alert, receive notifications and more</p>
       <div className="form">
       <div>
       <p className='form-label'>amount</p>
