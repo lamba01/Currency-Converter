@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { CgArrowsExchangeV } from "react-icons/cg";
+import "./App.css"
 
 interface Currency {
   code: string;
@@ -17,7 +19,6 @@ const CurrencyConverter: React.FC = () => {
     // Fetch currency list from an API (for example, Open Exchange Rates)
     axios.get('https://open.er-api.com/v6/latest')
       .then(response => {
-        console.log(response.data.rates)
         const currencyList: Currency[] = Object.keys(response.data.rates).map((code: string) => ({
           code,
           rate: response.data.rates[code],
@@ -44,39 +45,46 @@ const CurrencyConverter: React.FC = () => {
 
   return (
     <div>
+      <div className="converter">
       <h1>Currency Converter</h1>
+      <p>Check live rates, set rates alert, receive notifications and more</p>
+      <div className="form">
       <div>
+      <p className='form-label'>amount</p>
         <label>
-          Amount:
-          <input type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value))} />
-        </label>
-      </div>
-      <div>
-        <label>
-          From Currency:
           <select value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)}>
             {currencies.map(currency => (
               <option key={currency.code} value={currency.code}>{currency.code}</option>
             ))}
           </select>
+          <input type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value))} />
         </label>
       </div>
+      
+      <div className="separator">
+      <div className="line"></div>
+      <button onClick={handleConvert}><CgArrowsExchangeV size={'2em'}/></button>
+      <div className="line"></div>
+      </div>
       <div>
+      <p className='form-label'>converted amount</p>
+      <div className='converted-div'>
         <label>
-          To Currency:
           <select value={toCurrency} onChange={(e) => setToCurrency(e.target.value)}>
             {currencies.map(currency => (
               <option key={currency.code} value={currency.code}>{currency.code}</option>
             ))}
           </select>
         </label>
-      </div>
-      <button onClick={handleConvert}>Convert</button>
-      {convertedAmount !== null && (
-        <div>
-          <p>Converted Amount: {convertedAmount.toFixed(2)}</p>
+        {convertedAmount !== null && (
+        <div className='converted-digit-container'>
+          <p>{convertedAmount.toFixed(2)}</p>
         </div>
       )}
+      </div>
+      </div>
+      </div>
+      </div>
     </div>
   );
 };
